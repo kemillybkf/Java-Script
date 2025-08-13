@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    
+    <input type="text" onchange="exibirTexto(this.value)"
+    placeholder="Digite algo"
+<p id="exibeTexto"></p>
+<script>
+    function exibirTexto(texto) {
+        document.getElementById("exibeTexto").innerText=
+        "Você digitou: " + texto;
+    }
+</script>
+</body>
+</html>

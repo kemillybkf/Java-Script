@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<select onchange="mostrarEscolha(this.value)">
+<option value="">Escolha uma opção</option>
+<option value="Maçã">Maçã</option>
+<option value="Banana">Banana</option>
+</select>
+
+<p id="resultado"></p>
+
+<script>
+function mostrarEscolha(fruta) {
+    document.getElementById("resultado").innerText=
+    "Você escolheu: " + fruta;
+    }
+    </script>
+</body>
+</html>

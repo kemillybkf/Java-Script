@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Aula html</title>
+</head>
+<body>
+<p onmouseover="mostrarTexto()" onmouseout="esconderTexto()">
+    passe o mouse aqui! </p>
+<p id="saida"></p>
+<div>
+<script>
+function mostrarTexto() {
+    document.getElementById("saida").innerText = 
+    "Mouse em cima da div";
+    }
+
+function esconderTexto() {
+    document.getElementById("saida").innerText = "Mouse saiu da div";
+}
+</script>
+</div>    
+</body>
+</html>
