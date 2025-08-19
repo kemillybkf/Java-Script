@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>HTML</title>
+</head>
+<body>
+   <h2>Digite sua palavra/senha:</h2> 
+   <input type="password" id="campoSenha"
+   placeholder="Digite aqui...">
+   <p id="resultado"> Você digitou: </p>
+
+   <script>
+    const campo = document.getElementById("campoSenha");
+    const resultado = document.getElementById("resultado");
+
+
+    campo.addEventListener("keyup", function(){
+        let texto = campo.value;
+        resultado.textContent = " Você digitou: " + texto;
+    });
+   </script>
+</body>
+</html>

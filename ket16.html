@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML</title>
+</head>
+<body>
+   <input type="text" onkeyup="teclaPressionada(event)"
+   placeholder="Pressione uma tecla">
+   <p id = "tecla"></p>
+   
+   <script>
+    function teclaPressionada(event){
+        document.getElementById("tecla").innerText=
+        "Tecla pressionada: " + event.key;
+    }
+   </script>
+</body>
+</html>
