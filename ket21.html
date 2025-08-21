@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Document</title>
+</head>
+<body>
+ <button id="botao1">Dizer Olá</button>
+ <button id="botao2">Dizer Tchau</button>
+
+ <script>
+  const botao = document.getElementById("botao1");
+  botao.addEventListener("click", function(){
+  alert("Olá usando addEventListene");})
+  const botao2 = document.getElementById("botao2");
+  botao2.addEventListener("click", function(){
+   alert("Tchau usando addEventListener");
+  });
+ </script>
+</body>
+</html>

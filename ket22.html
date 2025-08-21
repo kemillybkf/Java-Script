@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+ <meta charset="UTF-8">
+ <title>Document</title>
+</head>
+<body>
+ <div id="caixa" style="width:200px;
+ border: 1px solid black;">
+ Passe o mouse aqui
+</div>
+
+<script>
+ const caixa = document.getElementById("caixa");
+
+ caixa.addEventListener("mouseover", function(){
+ caixa.style.backgroundColor = "lightblue";
+})
+
+caixa.addEventListener("mouseout", function(){
+ caixa.style.background = "";
+})
+
+</script>
+</body>
+</html>
