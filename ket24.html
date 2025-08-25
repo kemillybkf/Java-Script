@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+
+</head>
+
+<body> 
+
+<div class="botoes">Apresentação</div>
+<div class="botoes">Nomes</div>
+<div class="botoes">Professor</div>
+
+<script>
+
+    const divs = document.querySelectorAll(".botoes");
+
+    divs.forEach(function(div) {
+        botao.addEventListener("click", function() {
+        alert("Você clicou na: " + div.innerText);
+        });
+    });
+    
+</script>
+</body>
+</html>
