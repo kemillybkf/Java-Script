@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 30px;
+    }
+    input {
+        padding: 8px;
+        width: 200px;
+    }
+    button {
+        padding: 8px 12px;
+        margin-left: 5px;
+        cursor: pointer;
+    }
+    ul {
+        list-style: none;
+        padding: 0;
+        margin-top: 20px;
+    }
+    li {
+        padding: 10px;
+        background: #ffffff;
+        margin: 5px 0;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background 0.3s;
+    }
+    li:hover {
+        background: #ffffff;
+    }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>ProjetoKet</title>
+</head>
+<body>
+    <h1>Lista de Tarefas</h1>
+
+    <input type="text" id="tarefainput" placeholder="Digite uma tarefa">
+    <button id="submit">Adicionar</button>
+    <ul id="listtarefas"></ul>
+
+    <script>
+    const input = document.getElementById("tarefainput");
+    const botao = document.getElementById("submit");
+    const lista = document.getElementById("listtarefas");
+
+    function adicionarTarefa() {
+        const text = input.value.trim();
+
+        if (text !== "") {
+                const li = document.createElement("li");
+                li.textContent = text;
+                li.addEventListener("click", () => {
+                    lista.removeChild(li);
+                });
+                lista.appendChild(li);
+                input.value = "";
+            }
+        }
+
+        botao.addEventListener("click", adicionarTarefa);
+
+        input.addEventListener("keypress", function (e) {
+            if (e.key === "Enter") {
+                adicionarTarefa();
+            }
+        });
+    </script>
+</body>
+</html>
