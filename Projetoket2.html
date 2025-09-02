@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 30px;
+    }
+    input {
+        padding: 8px;
+        width: 200px;
+        margin-bottom: 15px;
+        font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            transition: border-color 0.3s;
+        }
+
+        /* Barra de pesquisa com destaque */
+    #pesquisar {
+            width: 300px;
+            margin-bottom: 20px;
+            border-color: #4CAF50; /* Verde */
+            font-size: 16px;
+        }
+
+        /* Quando o campo de pesquisa está em foco */
+    #pesquisar:focus {
+            outline: none;
+            border-color: #45a049;
+        }
+    
+    button{
+        padding: 8px 12px;
+        margin-left: 5px;
+        cursor: pointer;
+    #clean {
+        background-color: #f44336; /* Vermelho */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+        font-weight: bold; /* Para destacar mais */
+        padding: 10px 20px; /* Aumentando o tamanho */
+        }
+
+    #clean:hover {
+        background-color: #e53935;
+        }
+
+    }
+    ul {
+        list-style: none;
+        padding: 0;
+        margin-top: 20px;
+    }
+    li {
+        padding: 10px;
+        background: #ffffff;
+        margin: 5px 0;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background 0.3s;
+    }
+    li:hover {
+        background: #ffffff;
+    }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>ProjetoKet</title>
+</head>
+<body>
+    <h1>Lista de Tarefas</h1>
+    <input type="text" id="pesquisar" placeholder="Pesquisar tarefa...">
+    <input type="text" id="tarefainput" placeholder="Digite uma tarefa">
+    <button id="submit">Adicionar</button>
+    <button id="clean">Limpar</button>
+    <ul id="listtarefas"></ul>
+
+    <script>
+    const input = document.getElementById("tarefainput");
+    const pesquisar = document.getElementById("pesquisar");
+    const botao1 = document.getElementById("submit");
+    const botao2 = document.getElementById("clean");
+    const lista = document.getElementById("listtarefas");
+
+    window.onload = () => {
+        const tarefasSalvas = JSON.parse(localStorage.getItem("tarefas")) || [];
+        tarefasSalvas.forEach(tarefa => criarItem(tarefa));
+    };
+
+    function criarItem(text) {
+        const li = document.createElement("li");
+        li.textContent = text;
+        li.addEventListener("click", () => {
+            lista.removeChild(li);
+            salvarTarefas(); // Atualiza o localStorage
+        });
+        lista.appendChild(li);
+    }
+
+    function adicionarTarefa() {
+        const text = input.value.trim();
+        if (text !== "") {
+            criarItem(text);
+            input.value = "";
+            salvarTarefas();
+        }
+    }
+
+    function salvarTarefas() {
+        const itens = lista.querySelectorAll("li");
+        const tarefas = Array.from(itens).map(li => li.textContent);
+        localStorage.setItem("tarefas", JSON.stringify(tarefas));
+    }
+
+    botao1.addEventListener("click", adicionarTarefa);
+    botao2.addEventListener("click", limparTarefas);
+    pesquisar.addEventListener("input", filtrarTarefas); // Filtra ao digitar no campo de pesquisa
+    input.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+            adicionarTarefa();
+        }})
+    function limparTarefas() {
+            lista.innerHTML = "";
+            localStorage.removeItem("tarefas");
+        }
+    function filtrarTarefas() {
+        const termo = pesquisar.value.toLowerCase(); // Obtém o termo da pesquisa
+        const itens = lista.querySelectorAll("li");
+
+        itens.forEach(item => {
+        const textoItem = item.textContent.toLowerCase();
+        if (textoItem.includes(termo)) {
+            item.style.display = "block"; // Exibe o item
+            } else {
+            item.style.display = "none"; // Oculta o item
+                }
+            });
+        }
+</script>
+</body>
+</html>
