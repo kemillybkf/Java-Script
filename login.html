@@ -6,15 +6,19 @@
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #f9f9f9;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(105deg, #0d5c2b, #1c8c4c);
       color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
+    /* ---- HEADER ---- */
     header {
-      background-color: #1c8c4c;
+      background-color: #0d5c2b;
       color: #fff;
-      padding: 15px 40px;
+      padding: 10px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -24,55 +28,44 @@
     header h1 {
       margin: 0;
       font-size: 22px;
+      font-weight: 100;
     }
+
     .logo-container {
       display: flex;
       align-items: center;
     }
 
-    .logo-container img.logo {
-      height: 40px;
+    .logo-container img {
+      width: 50px;
       margin-right: 10px;
-    }
-
-    nav {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      margin-left: 20px;
-      font-weight: bold;
+      border-radius: 50%;
     }
 
     nav a.btn-primario,
     nav a.btn-secundario {
-      padding: 8px 16px;
-      border-radius: 4px;
+      padding: 10px 18px;
+      border-radius: 25px;
       margin-left: 10px;
       font-weight: bold;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
     }
 
     nav a.btn-primario {
       background-color: #fff;
       color: #1c8c4c;
       border: 2px solid #fff;
-      transition: background-color 0.3s, color 0.3s;
     }
 
     nav a.btn-primario:hover {
       background-color: #f0f0f0;
-      color: #1c8c4c;
     }
 
     nav a.btn-secundario {
       background-color: transparent;
       border: 2px solid #fff;
       color: #fff;
-      transition: background-color 0.3s, color 0.3s;
     }
 
     nav a.btn-secundario:hover {
@@ -80,40 +73,62 @@
       color: #1c8c4c;
     }
 
+    /* ---- LOGIN ---- */
     .login-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .login-box {
       background-color: #fff;
-      padding: 30px;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
       max-width: 400px;
-      margin: 60px auto;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      width: 100%;
       text-align: center;
     }
 
-    .login-container h2 {
+    .login-box h2 {
       color: #1c8c4c;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
     }
 
-    .login-container input {
+    .login-box input {
       width: 100%;
-      padding: 12px;
-      margin: 10px 0;
+      padding: 14px;
+      margin: 12px 0;
       border: 1px solid #ccc;
-      border-radius: 6px;
+      border-radius: 8px;
       font-size: 16px;
+      transition: border 0.3s, box-shadow 0.3s;
     }
 
-    .login-container button {
+    .login-box input:focus {
+      border-color: #1c8c4c;
+      box-shadow: 0 0 6px rgba(28, 140, 76, 0.6);
+      outline: none;
+    }
+
+    .login-box button {
       width: 100%;
-      padding: 12px;
+      padding: 14px;
       background-color: #1c8c4c;
       color: #fff;
       font-size: 18px;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
-      margin-top: 10px;
+      margin-top: 15px;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .login-box button:hover {
+      background-color: #157a3f;
+      transform: scale(1.05);
     }
 
     #mensagem {
@@ -121,34 +136,37 @@
       font-weight: bold;
     }
 
+    /* ---- FOOTER ---- */
     footer {
-      background-color: #1c8c4c;
+      background-color: #0d5c2b;
       color: #fff;
       text-align: center;
       padding: 15px;
-      margin-top: 40px;
+      font-size: 14px;
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="logo-container">
-      <img src="imagemCSB.jpg" alt="Logo" class="logo">
-      <h1>CSB</h1>
-    </div>
-    <nav>
-      <a href="iniciocsb.html">Início</a>
-      <a href="cadastro.html" class="btn-primario">Cadastro</a>
-    </nav>
-  </header>
+ <header>
+  <div class="logo-container">
+    <img src="imagemCSB.jpg" alt="Logo" class="logo">
+    <h1>CSB</h1>
+  </div>
+  <nav>
+    <a href="iniciocsb.html" class="btn-secundario">Início</a>
+    <a href="cadastro.html" class="btn-primario">Cadastro</a>
+  </nav>
+</header>
 
   <div class="login-container">
-    <h2>Login</h2>
-    <input type="text" id="loginUsuario" placeholder="Usuário" required>
-    <input type="password" id="loginSenha" placeholder="Senha" required>
-    <button onclick="fazerLogin()">Entrar</button>
-    <div id="mensagem"></div>
+    <div class="login-box">
+      <h2>Login</h2>
+      <input type="text" id="loginUsuario" placeholder="Usuário" required>
+      <input type="password" id="loginSenha" placeholder="Senha" required>
+      <button onclick="fazerLogin()">Entrar</button>
+      <div id="mensagem"></div>
+    </div>
   </div>
 
   <footer>
@@ -175,7 +193,7 @@
 
         // Redirecionar após 1 segundo
         setTimeout(() => {
-          window.location.href = 'pagina-protegida.html'; // Altere para sua página
+          window.location.href = 'sintoma.html'; // Corrigido o nome da página
         }, 1000);
 
       } else {
