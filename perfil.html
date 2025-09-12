@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil do Usuário - CSB</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0d5c2b, #1c8c4c);
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background-color: #196637;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+      position: relative;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 26px;
+    }
+
+    .top-buttons {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-buttons a {
+      text-decoration: none;
+      background: #14502b;
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 25px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+    }
+
+    .top-buttons a:hover {
+      background: #0d3a1f;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 12px rgba(0,0,0,0.25);
+    }
+
+    .perfil-container {
+      max-width: 900px;
+      width: 90%;
+      margin: 40px auto;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+      padding: 40px 20px;
+      animation: fadeIn 0.8s ease-in-out;
+    }
+
+    .foto-perfil {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #196637;
+      margin-bottom: 20px;
+    }
+
+    .nome {
+      font-size: 24px;
+      font-weight: bold;
+      color: #196637;
+      margin-bottom: 5px;
+    }
+
+    .email {
+      font-size: 15px;
+      color: #555;
+      margin-bottom: 25px;
+    }
+
+    .info, .consultas {
+      text-align: left;
+      background: #f7f7f7;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: inset 0 1px 4px rgba(0,0,0,0.1);
+      margin-top: 20px;
+    }
+
+    .info p, .consultas p {
+      margin: 10px 0;
+      font-size: 16px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 6px;
+    }
+
+    .consultas h2 {
+      color: #196637;
+      margin-bottom: 15px;
+    }
+
+    .sem-consulta {
+      font-size: 14px;
+      color: #777;
+      font-style: italic;
+    }
+
+    .btn-editar {
+      display: inline-block;
+      margin-top: 25px;
+      background: #196637;
+      color: #fff;
+      border: none;
+      padding: 14px 25px;
+      font-size: 16px;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .btn-editar:hover {
+      background: #14502b;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+    }
+
+    footer {
+      background-color: #14502b;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: auto;
+      font-size: 14px;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.25);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="top-buttons">
+    <a href="iniciocsb.html">🏠 Início</a>
+    <a href="links.html">📅 Menu de Consulta</a>
+  </div>
+  <h1>Perfil do Usuário</h1>
+  <p>Gerencie suas informações pessoais e consultas</p>
+</header>
+
+<section class="perfil-container">
+  <img id="fotoPerfil" src="https://via.placeholder.com/120" alt="Foto de Perfil" class="foto-perfil">
+  
+  <div class="nome" id="nomeUsuario">Carregando...</div>
+  <div class="email" id="emailUsuario">Carregando...</div>
+
+  <div class="info">
+    <p><strong>Telefone:</strong> <span id="telefoneUsuario"></span></p>
+    <p><strong>Data de Nascimento:</strong> <span id="nascimentoUsuario"></span></p>
+    <p><strong>Endereço:</strong> <span id="enderecoUsuario"></span></p>
+  </div>
+
+  <!-- Lista de consultas -->
+  <div class="consultas">
+    <h2>📋 Consultas Agendadas</h2>
+    <div id="listaConsultas"></div>
+  </div>
+
+  <button class="btn-editar">✏️ Editar Perfil</button>
+</section>
+
+<footer>
+  <p>&copy; 2025 CSB - Todos os direitos reservados</p>
+</footer>
+
+<script>
+  // --- Dados do usuário ---
+  if (!localStorage.getItem("usuario")) {
+    const usuarioExemplo = {
+      nome: "João da Silva",
+      email: "joao.silva@email.com",
+      telefone: "(11) 98765-4321",
+      nascimento: "12/03/1990",
+      endereco: "Rua das Flores, 123 - São Paulo/SP",
+      foto: "https://via.placeholder.com/140"
+    };
+    localStorage.setItem("usuario", JSON.stringify(usuarioExemplo));
+  }
+
+  const usuario = JSON.parse(localStorage.getItem("usuario"));
+
+  document.getElementById("nomeUsuario").textContent = usuario.nome;
+  document.getElementById("emailUsuario").textContent = usuario.email;
+  document.getElementById("telefoneUsuario").textContent = usuario.telefone;
+  document.getElementById("nascimentoUsuario").textContent = usuario.nascimento;
+  document.getElementById("enderecoUsuario").textContent = usuario.endereco;
+  document.getElementById("fotoPerfil").src = usuario.foto;
+
+  // --- Consultas do usuário ---
+  let consultas = JSON.parse(localStorage.getItem("consultas")) || [];
+
+  const lista = document.getElementById("listaConsultas");
+
+  if (consultas.length === 0) {
+    lista.innerHTML = "<p class='sem-consulta'>Nenhuma consulta agendada até o momento.</p>";
+  } else {
+    consultas.forEach((c, i) => {
+      const item = document.createElement("p");
+      item.innerHTML = `🩺 <strong>${c.especialidade}</strong> - ${c.medico} <br> 📍 ${c.local} | 📅 ${c.data} às ${c.hora}`;
+      lista.appendChild(item);
+    });
+  }
+</script>
+
+</body>
+</html>
