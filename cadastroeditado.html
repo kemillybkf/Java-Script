@@ -21,6 +21,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
     }
 
     header h1 {
@@ -110,6 +111,36 @@
       transform: scale(1.05);
     }
 
+     nav a.btn-primario,
+    nav a.btn-secundario {
+      padding: 10px 18px;
+      border-radius: 25px;
+      margin-left: 10px;
+      font-weight: bold;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+    }
+
+    nav a.btn-primario {
+      background-color: #fff;
+      color: #1c8c4c;
+      border: 2px solid #fff;
+    }
+
+    nav a.btn-primario:hover {
+      background-color: #f0f0f0;
+    }
+
+    nav a.btn-secundario {
+      background-color: transparent;
+      border: 2px solid #fff;
+      color: #fff;
+    }
+
+    nav a.btn-secundario:hover {
+      background-color: #fff;
+      color: #1c8c4c;}
+
     #resultado {
       margin-top: 15px;
       font-weight: bold;
@@ -130,6 +161,13 @@
   <!-- HEADER (Opcional: pode remover se não quiser) -->
   <header>
     <h1>CSB</h1>
+    <nav>
+      <a href="iniciocsb.html" class="btn-primario">Início</a>
+      <a href="login.html" class="btn-secundario">Login</a>
+    </nav>
+  </header>
+
+  <div class="login-container">
   </header>
 
   <div class="main-container">
