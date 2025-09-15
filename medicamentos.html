@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Farmácia Online — Loja de Medicamentos (Demo)</title>
+  <meta name="description" content="Template de loja de medicamentos - demonstração. Inclui catálogo, carrinho local e aviso sobre receitas." />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(105deg, #0d5c2b, #1c8c4c);
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ---- HEADER ---- */
+    header {
+      background-color: #0d5c2b;
+      color: #fff;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    header .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    header .brand .logo {
+      font-weight: bold;
+      font-size: 20px;
+      background: #fff;
+      color: #0d5c2b;
+      padding: 6px 10px;
+      border-radius: 50%;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .search {
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      min-width: 240px;
+    }
+
+    .btn {
+      padding: 8px 14px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      background: #1c8c4c;
+      color: #fff;
+      transition: 0.2s;
+    }
+
+    .btn:hover {
+      background: #157a3f;
+    }
+
+    .btn.ghost {
+      background: transparent;
+      border: 1px solid #1c8c4c;
+      color: #1c8c4c;
+    }
+
+    .btn.ghost:hover {
+      background: #1c8c4c;
+      color: #fff;
+    }
+
+    /* ---- AVISO ---- */
+    .notice {
+      background: #fff3cd;
+      color: #856404;
+      padding: 15px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    /* ---- FILTROS ---- */
+    .top-controls {
+      display: flex;
+      justify-content: space-between;
+      padding: 15px 20px;
+      background: #fff;
+      flex-wrap: wrap;
+    }
+
+    .filters select {
+      padding: 6px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    /* ---- PRODUTOS ---- */
+    main {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 15px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+
+    .muted {
+      font-size: 13px;
+      color: #666;
+    }
+
+    .price {
+      font-weight: bold;
+      color: #0d5c2b;
+    }
+
+    /* ---- CARRINHO ---- */
+    .cart-btn {
+      position: relative;
+    }
+
+    .cart-count {
+      background: red;
+      color: #fff;
+      border-radius: 50%;
+      padding: 2px 6px;
+      font-size: 12px;
+      position: absolute;
+      top: -8px;
+      right: -8px;
+    }
+
+    .cart-panel {
+      position: fixed;
+      right: -400px;
+      top: 0;
+      width: 300px;
+      height: 100%;
+      background: #fff;
+      box-shadow: -2px 0 6px rgba(0,0,0,0.2);
+      padding: 20px;
+      overflow-y: auto;
+      transition: right 0.3s ease;
+      z-index: 1000;
+    }
+
+    .cart-panel.visible {
+      right: 0;
+    }
+
+    .cart-item {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 8px;
+    }
+
+    .cart-item img {
+      width: 60px;
+      border-radius: 6px;
+    }
+
+    /* ---- FOOTER ---- */
+    footer {
+      background-color: #0d5c2b;
+      color: #fff;
+      text-align: center;
+      padding: 15px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo">F</div>
+        <h1>CSB</h1>
+      </div>
+      <nav class="actions">
+        <input id="searchInput" class="search" placeholder="Pesquisar medicamento..." />
+        <button id="cartBtn" class="btn cart-btn">Carrinho <span id="cartCount" class="cart-count" style="display:none">0</span></button>
+      </nav>
+    </header>
+
+    <div class="notice">
+      <strong>Atenção:</strong> Loja CSB. Medicamentos controlados só com receita válida.
+    </div>
+
+    <div class="top-controls">
+      <div class="filters">
+        <label>Categoria</label>
+        <select id="categoryFilter">
+          <option value="all">Todas</option>
+          <option value="analgesicos">Analgésicos</option>
+          <option value="antialergicos">Antialérgicos</option>
+          <option value="antibioticos">Antibióticos</option>
+          <option value="vitaminas">Vitaminas</option>
+          <option value="xaropes">Xaropes</option>
+        </select>
+      </div>
+      <div>
+        <button id="clearCart" class="btn ghost">Limpar carrinho</button>
+      </div>
+    </div>
+
+    <main>
+      <section id="products" class="grid">
+        <!-- produtos gerados por JS -->
+      </section>
+    </main>
+
+    <div id="cartPanel" class="cart-panel" aria-hidden="true">
+      <h3>Carrinho</h3>
+      <div id="cartItems"></div>
+      <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center">
+        <strong>Total: R$ <span id="cartTotal">0,00</span></strong>
+        <button id="checkoutBtn" class="btn">Finalizar (Demo)</button>
+      </div>
+      <p class="muted" style="font-size:13px;margin-top:8px">Checkout apenas em modo demo.</p>
+    </div>
+
+    <footer>
+      <p>Template criado para demonstração — implemente backend e pagamentos reais antes de usar.</p>
+    </footer>
+  </div>
+
+  <script>
+    const products = [
+  // Analgésicos e anti-inflamatórios
+  {id:1, name:'Dipirona 500mg (10 comprimidos)', price:6.90, category:'analgesicos'},
+  {id:2, name:'Paracetamol 500mg (10 comprimidos)', price:7.50, category:'analgesicos'},
+  {id:3, name:'Ibuprofeno 400mg (10 comprimidos)', price:9.00, category:'analgesicos'},
+  {id:4, name:'Nimesulida 100mg (10 comprimidos)', price:12.00, category:'analgesicos'},
+  {id:5, name:'Diclofenaco 50mg (10 comprimidos)', price:10.00, category:'analgesicos'},
+  {id:6, name:'Cetoprofeno 100mg (10 comprimidos)', price:11.50, category:'analgesicos'},
+  {id:7, name:'Morfina 10mg (10 comprimidos)', price:50.00, category:'analgesicos'},
+  {id:8, name:'Tramadol 50mg (10 comprimidos)', price:40.00, category:'analgesicos'},
+  {id:9, name:'Ketorolaco 10mg (10 comprimidos)', price:25.00, category:'analgesicos'},
+  {id:10, name:'Prednisona 20mg (10 comprimidos)', price:30.00, category:'antiinflamatorios'},
+
+  // Anti-alérgicos
+  {id:11, name:'Loratadina 10mg (10 comprimidos)', price:15.00, category:'antialergicos'},
+  {id:12, name:'Cetirizina 10mg (10 comprimidos)', price:14.00, category:'antialergicos'},
+  {id:13, name:'Fexofenadina 120mg (10 comprimidos)', price:17.00, category:'antialergicos'},
+  {id:14, name:'Desloratadina 5mg (10 comprimidos)', price:20.00, category:'antialergicos'},
+  {id:15, name:'Bromidrato de dexclorfeniramina 2mg (10 comprimidos)', price:18.00, category:'antialergicos'},
+
+  // Antibióticos
+  {id:16, name:'Amoxicilina 500mg (10 cápsulas)', price:20.00, category:'antibioticos'},
+  {id:17, name:'Azitromicina 500mg (3 comprimidos)', price:35.00, category:'antibioticos'},
+  {id:18, name:'Cefalexina 500mg (10 cápsulas)', price:28.00, category:'antibioticos'},
+  {id:19, name:'Claritromicina 500mg (10 comprimidos)', price:40.00, category:'antibioticos'},
+  {id:20, name:'Doxiciclina 100mg (10 cápsulas)', price:38.00, category:'antibioticos'},
+  {id:21, name:'Ceftriaxona 1g (1 frasco injetável)', price:50.00, category:'antibioticos'},
+  {id:22, name:'Metronidazol 500mg (10 comprimidos)', price:22.00, category:'antibioticos'},
+  {id:23, name:'Sulfametoxazol + Trimetoprim (10 comprimidos)', price:18.00, category:'antibioticos'},
+
+  // Antivirais
+  {id:24, name:'Oseltamivir 75mg (10 cápsulas)', price:55.00, category:'antivirais'},
+  {id:25, name:'Aciclovir 400mg (10 comprimidos)', price:28.00, category:'antivirais'},
+  {id:26, name:'Valaciclovir 500mg (10 comprimidos)', price:45.00, category:'antivirais'},
+
+  // Anti-hipertensivos
+  {id:27, name:'Losartana 50mg (10 comprimidos)', price:30.00, category:'antihipertensivos'},
+  {id:28, name:'Enalapril 10mg (10 comprimidos)', price:25.00, category:'antihipertensivos'},
+  {id:29, name:'Amlodipino 5mg (10 comprimidos)', price:28.00, category:'antihipertensivos'},
+  {id:30, name:'Captopril 25mg (10 comprimidos)', price:22.00, category:'antihipertensivos'},
+  {id:31, name:'Hidroclorotiazida 25mg (10 comprimidos)', price:18.00, category:'antihipertensivos'},
+  {id:32, name:'Valsartana 80mg (10 comprimidos)', price:32.00, category:'antihipertensivos'},
+
+  // Antidiabéticos
+  {id:33, name:'Metformina 500mg (10 comprimidos)', price:20.00, category:'antidiabeticos'},
+  {id:34, name:'Glimepirida 2mg (10 comprimidos)', price:25.00, category:'antidiabeticos'},
+  {id:35, name:'Glibenclamida 5mg (10 comprimidos)', price:22.00, category:'antidiabeticos'},
+  {id:36, name:'Insulina NPH 100UI/mL (1 caneta)', price:80.00, category:'antidiabeticos'},
+  {id:37, name:'Insulina Regular 100UI/mL (1 caneta)', price:85.00, category:'antidiabeticos'},
+
+  // Vitaminas e suplementos
+  {id:38, name:'Vitamina C 500mg (30 cápsulas)', price:18.50, category:'vitaminas'},
+  {id:39, name:'Vitamina D 1000UI (30 cápsulas)', price:22.00, category:'vitaminas'},
+  {id:40, name:'Multivitamínico (30 cápsulas)', price:25.00, category:'vitaminas'},
+  {id:41, name:'Ômega 3 1000mg (30 cápsulas)', price:45.00, category:'vitaminas'},
+  {id:42, name:'Complexo B 50mg (30 cápsulas)', price:28.00, category:'vitaminas'},
+  {id:43, name:'Cálcio + Vitamina D (30 comprimidos)', price:35.00, category:'vitaminas'},
+  {id:44, name:'Magnésio 250mg (30 cápsulas)', price:32.00, category:'vitaminas'},
+
+  // Xaropes e antitussígenos
+  {id:45, name:'Xarope de guaco 120ml', price:12.50, category:'xaropes'},
+  {id:46, name:'Xarope para tosse 120ml', price:14.00, category:'xaropes'},
+  {id:47, name:'Xarope de bronquite 120ml', price:16.00, category:'xaropes'},
+  {id:48, name:'Xarope de guaifenesina 100ml', price:18.00, category:'xaropes'},
+  {id:49, name:'Xarope de codeína 100ml', price:20.00, category:'xaropes'},
+
+  // Antiácidos e digestivos
+  {id:50, name:'Omeprazol 20mg (10 cápsulas)', price:18.00, category:'antiacidos'},
+  {id:51, name:'Ranitidina 150mg (10 comprimidos)', price:16.00, category:'antiacidos'},
+  {id:52, name:'Loperamida 2mg (10 cápsulas)', price:12.00, category:'antiacidos'},
+  {id:53, name:'Dimeticona 40mg (10 cápsulas)', price:14.00, category:'antiacidos'},
+  {id:54, name:'Esomeprazol 20mg (10 cápsulas)', price:20.00, category:'antiacidos'},
+
+  // Outros comuns
+  {id:55, name:'Sildenafil 50mg (4 comprimidos)', price:35.00, category:'outros'},
+  {id:56, name:'Clonazepam 2mg (10 comprimidos)', price:30.00, category:'ansioliticos'},
+  {id:57, name:'Fluoxetina 20mg (10 comprimidos)', price:25.00, category:'antidepressivos'},
+  {id:58, name:'Diazepam 5mg (10 comprimidos)', price:28.00, category:'ansioliticos'},
+  {id:59, name:'Lorazepam 2mg (10 comprimidos)', price:30.00, category:'ansioliticos'},
+  {id:60, name:'Alprazolam 0,5mg (10 comprimidos)', price:32.00, category:'ansioliticos'},
+  {id:61, name:'Prednisolona 20mg (10 comprimidos)', price:30.00, category:'antiinflamatorios'},
+  {id:62, name:'Hidrocortisona 20mg (10 comprimidos)', price:28.00, category:'antiinflamatorios'}
+];
+
+
+    let cart = JSON.parse(localStorage.getItem('demoCart')||'{}');
+
+    const $products = document.getElementById('products');
+    const $search = document.getElementById('searchInput');
+    const $category = document.getElementById('categoryFilter');
+    const $cartBtn = document.getElementById('cartBtn');
+    const $cartPanel = document.getElementById('cartPanel');
+    const $cartCount = document.getElementById('cartCount');
+    const $cartItems = document.getElementById('cartItems');
+    const $cartTotal = document.getElementById('cartTotal');
+    const $clearCart = document.getElementById('clearCart');
+    const $checkoutBtn = document.getElementById('checkoutBtn');
+
+    function formatMoney(v){return v.toFixed(2).replace('.',',')}
+
+    function renderProducts(list){
+      $products.innerHTML = '';
+      list.forEach(p=>{
+        const el = document.createElement('article');
+        el.className = 'card';
+        el.innerHTML = `
+          <img alt="${p.name}" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300'><rect width='100%' height='100%' fill='%23f8fafc'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='%239ca3af' font-size='20'>Imagem</text></svg>` + '';
+        el.innerHTML += `<div><strong>${p.name}</strong><div class='muted'>${p.category}</div></div>`;
+        el.innerHTML += `<div style='margin-top:8px;display:flex;justify-content:space-between;align-items:center'><div class='price'>R$ ${formatMoney(p.price)}</div><div><button class='btn' data-id='${p.id}'>Adicionar</button></div></div>`;
+        $products.appendChild(el);
+      })
+      document.querySelectorAll('.card .btn').forEach(b=>b.addEventListener('click',e=>{
+        addToCart(Number(e.currentTarget.dataset.id));
+      }));
+    }
+
+    function filterAndRender(){
+      const q = $search.value.trim().toLowerCase();
+      const cat = $category.value;
+      let list = products.filter(p=> (cat==='all' || p.category===cat) && (p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q)));
+      renderProducts(list);
+    }
+
+    function addToCart(id,qty=1){
+      const key = String(id);
+      cart[key] = (cart[key]||0) + qty;
+      saveCart();
+      renderCartPreview();
+    }
+
+    function saveCart(){
+      localStorage.setItem('demoCart',JSON.stringify(cart));
+    }
+
+    function renderCartPreview(){
+      const keys = Object.keys(cart);
+      const totalItems = keys.reduce((s,k)=>s+cart[k],0);
+      $cartCount.style.display = totalItems>0?'inline-block':'none';
+      $cartCount.textContent = totalItems;
+
+      $cartItems.innerHTML = '';
+      let total = 0;
+      keys.forEach(k=>{
+        const p = products.find(x=>x.id===Number(k));
+        const qty = cart[k];
+        if(!p) return;
+        total += p.price*qty;
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+        div.innerHTML = `
+          <img alt='${p.name}' src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'200\' height=\'120\'><rect width=\'100%\' height=\'100%\' fill=\'%23f8fafc\'/></svg>'>
+          <div style='flex:1'>
+            <div><strong>${p.name}</strong></div>
+            <div class='muted'>R$ ${formatMoney(p.price)} x ${qty}</div>
+            <div class='cart-actions' style='margin-top:6px'>
+              <button class='btn ghost' data-action='dec' data-id='${p.id}'>-</button>
+              <button class='btn ghost' data-action='inc' data-id='${p.id}'>+</button>
+              <button class='btn ghost' data-action='remove' data-id='${p.id}'>Remover</button>
+            </div>
+          </div>
+        `;
+        $cartItems.appendChild(div);
+      });
+      $cartTotal.textContent = formatMoney(total);
+
+      $cartItems.querySelectorAll('[data-action]').forEach(btn=>btn.addEventListener('click',e=>{
+        const id = String(e.currentTarget.dataset.id);
+        const action = e.currentTarget.dataset.action;
+        if(action==='inc') cart[id]=(cart[id]||0)+1;
+        if(action==='dec'){cart[id]=(cart[id]||0)-1;if(cart[id]<=0)delete cart[id];}
+        if(action==='remove') delete cart[id];
+        saveCart();
+        renderCartPreview();
+      }));
+    }
+
+    $search.addEventListener('input', debounce(filterAndRender,300));
+    $category.addEventListener('change', filterAndRender);
+    $cartBtn.addEventListener('click', ()=>{$cartPanel.classList.toggle('visible');$cartPanel.setAttribute('aria-hidden',String(!$cartPanel.classList.contains('visible')));});
+    $clearCart.addEventListener('click', ()=>{cart={};saveCart();renderCartPreview();});
+    $checkoutBtn.addEventListener('click', ()=>{
+      if(Object.keys(cart).length===0){alert('Carrinho vazio');return;}
+      alert('Checkout demo: implemente gateway de pagamento e verificação de receita antes de confirmar pedidos.');
+    });
+
+    function debounce(fn,ms=200){let t;return (...a)=>{clearTimeout(t);t=setTimeout(()=>fn(...a),ms)}}
+
+    filterAndRender();
+    renderCartPreview();
+    window.addEventListener('beforeunload', ()=>{saveCart();});
+  </script>
+</body>
+</html>
