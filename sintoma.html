@@ -2,36 +2,209 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Sintomas</title>
+  <title>Verificação de Sintomas - CSB</title>
   <style>
-    body {margin:0;font-family:'Poppins',sans-serif;background:#f9f9f9;color:#333;}
-    header {position:sticky;top:0;z-index:1000;background:#196637;color:#fff;padding:15px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;box-shadow:0 2px 10px rgba(0,0,0,.2);}
-    header h1 {margin:0;font-size:22px;}
-    .logo-container {display:flex;align-items:center;}
-    .logo-container img.logo {height:40px;margin-right:10px;}
-    nav a {color:#fff;text-decoration:none;margin-left:5px;font-weight:100;transition:.2s;}
-    nav a:hover {transform:scale(1.05);}
-    nav a.btn-primario {padding:10px 18px;border-radius:25px;margin-left:10px;font-weight:bold;background:#fff;color:#1c8c4c;border:2px solid #fff;transition:.3s;}
-    nav a.btn-primario:hover {background:#f0f0f0;}
-    main {max-width:700px;margin:60px auto;background:#fff;padding:30px;border-radius:12px;box-shadow:0 6px 15px rgba(0,0,0,.1);text-align:center;}
-    main h2 {color:#196637;margin-bottom:25px;}
-    label {display:block;margin:15px 0 5px;font-weight:600;}
-    select {width:100%;padding:10px;border-radius:8px;border:1px solid #ccc;font-size:14px;}
-    button {margin-top:25px;background:#1c8c4c;border:none;padding:14px 28px;color:#fff;font-size:16px;border-radius:30px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.2);transition:.2s;}
-    button:hover {transform:scale(1.05);background:#166233;}
-    #resposta {margin-top:25px;font-weight:bold;padding:15px;border-radius:10px;display:inline-block;max-width:100%;background:#f0f0f0;color:#333;white-space:pre-line;}
-    footer {background:#1b5e20;color:white;text-align:center;padding:20px;margin-top:auto;font-size:14px;box-shadow:0 -2px 8px rgba(0,0,0,.2);}
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0d5c2b, #1c8c4c);
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ---- HEADER ---- */
+    header {
+      background-color: #0d5c2b;
+      color: #fff;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 500;
+      letter-spacing: 1px;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-container img {
+      width: 55px;
+      margin-right: 12px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+    }
+
+    nav a {
+      text-decoration: none;
+      margin-left: 12px;
+      padding: 10px 18px;
+      border-radius: 25px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    nav a.btn-primario {
+      background-color: #fff;
+      color: #1c8c4c;
+      border: 2px solid #fff;
+    }
+
+    nav a.btn-primario:hover {
+      background-color: #f0f0f0;
+    }
+
+    nav a.btn-secundario {
+      background-color: transparent;
+      border: 2px solid #fff;
+      color: #fff;
+    }
+
+    nav a.btn-secundario:hover {
+      background-color: #fff;
+      color: #1c8c4c;
+    }
+
+    /* ---- MAIN ---- */
+    main {
+      flex: 1;
+      max-width: 800px;
+      width: 90%;
+      margin: 30px auto;
+      background: #fff;
+      padding: 40px 30px;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+
+    main h2 {
+      color: #1c8c4c;
+      margin-bottom: 25px;
+      font-size: 26px;
+    }
+
+    label {
+      display: block;
+      margin-top: 18px;
+      font-weight: 500;
+      text-align: left;
+      color: #444;
+    }
+
+    select {
+      width: 100%;
+      padding: 14px;
+      margin-top: 8px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 16px;
+      transition: border 0.3s, box-shadow 0.3s;
+    }
+
+    select:focus {
+      border-color: #1c8c4c;
+      box-shadow: 0 0 6px rgba(28, 140, 76, 0.6);
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      background-color: #1c8c4c;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 25px;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    button:hover {
+      background-color: #157a3f;
+      transform: scale(1.05);
+    }
+
+    /* ---- RESPOSTA ---- */
+    #resposta {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 16px;
+      line-height: 1.5;
+      display: none;
+    }
+
+    #resposta.sucesso {
+      background: #e6f9ed;
+      color: #146b36;
+      border: 1px solid #1c8c4c;
+    }
+
+    #resposta.erro {
+      background: #fdeaea;
+      color: #b22222;
+      border: 1px solid #d9534f;
+    }
+
+    /* ---- FOOTER ---- */
+    footer {
+      background-color: #0d5c2b;
+      color: #fff;
+      text-align: center;
+      padding: 18px;
+      font-size: 14px;
+      margin-top: auto;
+    }
+
+    /* ---- RESPONSIVO ---- */
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      nav {
+        margin-top: 10px;
+      }
+
+      main {
+        padding: 25px 20px;
+      }
+    }
   </style>
 </head>
 <body>
   <header>
     <div class="logo-container">
-      <img src="imagemCSB.jpg" alt="Logo" class="logo">
+      <img src="imagemCSB.jpg" alt="Logo CSB" class="logo">
       <h1>CSB</h1>
     </div>
     <nav>
-      <a href="iniciocsb.html">Início</a>
       <a href="links.html" class="btn-primario">Consulte</a>
+       <div class="perfil-container" id="perfil-container">
+    <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Perfil">
+    <span class="perfil-nome" id="user-name"></span>
+    <div class="perfil-menu" id="perfil-menu">
+      <p id="perfil-info-nome"></p>
+      <p id="perfil-info-email"></p>
+      <p id="perfil-info-telefone"></p>
+      <a href="iniciocsb.html">Sair</a>
+    </div>
+  </div>
+  </div>
     </nav>
   </header>
 
@@ -47,7 +220,7 @@
     <label for="s3">Sintoma 3:</label>
     <select id="s3"></select>
 
-    <button onclick="verificar()">Verificar Doença</button>
+    <button onclick="verificar()">🔍 Verificar Doença</button>
 
     <p id="resposta"></p>
   </main>
@@ -57,7 +230,6 @@
   </footer>
 
   <script>
-    // lista ampliada de sintomas
     const sintomasLista = [
       "febre","tosse","dor_cabeca","cansaco","dor_garganta","falta_ar","nariz_entupido","espirros","calafrios",
       "nausea","vomito","diarreia","dor_muscular","perda_paladar","perda_olfato",
@@ -68,9 +240,7 @@
       "formigamento","confusao","perda_memoria","queda_cabelo","perda_apetite","tremores","calafrios_intensos"
     ];
 
-    // tabela de doenças principais (100+)
     const doencas = {
-      // Respiratórias / Infecciosas
       "Gripe": ["febre","tosse","cansaco"],
       "Resfriado comum": ["espirros","nariz_entupido","dor_garganta"],
       "Covid-19": ["febre","perda_paladar","perda_olfato","tosse"],
@@ -81,15 +251,11 @@
       "Sinusite": ["dor_cabeca","nariz_entupido","febre"],
       "Laringite": ["tosse","dor_garganta","febre"],
       "Coqueluche": ["tosse","falta_ar","vomito"],
-
-      // Tropicais
       "Dengue": ["febre","calafrios","dor_muscular"],
       "Zika": ["febre","manchas_pele","coceira"],
       "Chikungunya": ["febre","dor_muscular","dor_cabeca"],
       "Malária": ["febre","calafrios","suor_noturno"],
       "Febre Amarela": ["febre","pele_amarelada","dor_cabeca"],
-
-      // Gastrointestinais
       "Intoxicação alimentar": ["nausea","vomito","diarreia"],
       "Gastrite": ["dor_abdominal","azia","nausea"],
       "Úlcera": ["dor_abdominal","azia","vomito"],
@@ -98,8 +264,6 @@
       "Apendicite": ["dor_abdominal","febre","nausea"],
       "Doença celíaca": ["diarreia","cansaco","perda_peso"],
       "Síndrome do intestino irritável": ["dor_abdominal","diarreia","azia"],
-
-      // Doenças Crônicas
       "Diabetes": ["sede_excessiva","urina_frequente","perda_peso","visao_turva"],
       "Hipertensão": ["pressao_alta","dor_cabeca","tontura"],
       "Insuficiência cardíaca": ["falta_ar","dor_peito","inchaço_pernas"],
@@ -107,8 +271,6 @@
       "Doença renal crônica": ["inchaço_pernas","cansaco","sangue_urina"],
       "Artrite": ["dor_muscular","rigidez_pescoco","cansaco"],
       "Osteoporose": ["dor_muscular","tontura","queda_cabelo"],
-
-      // Neurológicas / Mentais
       "Enxaqueca": ["dor_cabeca","nausea","visao_turva"],
       "AVC (derrame)": ["formigamento","confusao","rigidez_pescoco"],
       "Alzheimer": ["perda_memoria","confusao","falta_concentracao"],
@@ -117,21 +279,15 @@
       "Depressão": ["cansaco","falta_sono","perda_apetite"],
       "Epilepsia": ["confusao","tremores","perda_memoria"],
       "Esquizofrenia": ["confusao","falta_concentracao","ansiedade"],
-
-      // Autoimunes
       "Lúpus": ["manchas_pele","cansaco","dor_muscular"],
       "Esclerose múltipla": ["formigamento","cansaco","confusao"],
       "Psoríase": ["manchas_pele","coceira","dor_muscular"],
       "Artrite reumatoide": ["dor_muscular","rigidez_pescoco","cansaco"],
-
-      // Cânceres comuns
       "Câncer de pulmão": ["tosse","falta_ar","dor_peito"],
       "Câncer de estômago": ["dor_abdominal","perda_peso","perda_apetite"],
       "Câncer de fígado": ["pele_amarelada","cansaco","perda_apetite"],
       "Câncer de pele": ["manchas_pele","coceira","queda_cabelo"],
       "Leucemia": ["cansaco","sangramento_nariz","suor_noturno"],
-
-      // Outros
       "Amigdalite": ["febre","dor_garganta"],
       "Otite": ["dor_cabeca","febre","confusao"],
       "Conjuntivite": ["olhos_vermelhos","coceira","febre"],
@@ -144,46 +300,36 @@
       "Varíola": ["febre","manchas_pele","calafrios_intensos"]
     };
 
-    // preencher selects automaticamente
+    function capitalizar(str) {
+      return str.replace(/_/g," ").replace(/\b\w/g, l => l.toUpperCase());
+    }
+
     function preencherSelects() {
-      const selects = [document.getElementById("s1"), document.getElementById("s2"), document.getElementById("s3")];
+      const selects = ["s1","s2","s3"].map(id => document.getElementById(id));
       selects.forEach(sel => {
-        sel.innerHTML = '<option value="">Selecione</option>';
-        sintomasLista.forEach(s => {
-          const opt = document.createElement("option");
-          opt.value = s;
-          opt.textContent = s.replace(/_/g," ").replace(/\b\w/g, l => l.toUpperCase());
-          sel.appendChild(opt);
-        });
+        sel.innerHTML = '<option value="">Selecione</option>' + 
+          sintomasLista.map(s => `<option value="${s}">${capitalizar(s)}</option>`).join('');
       });
     }
     preencherSelects();
 
-    // verificar doença
     function verificar() {
-      let sintomasSelecionados = [
-        document.getElementById("s1").value,
-        document.getElementById("s2").value,
-        document.getElementById("s3").value
-      ].filter(s => s !== "");
-
-      let resposta = document.getElementById("resposta");
+      const selecionados = ["s1","s2","s3"].map(id => document.getElementById(id).value).filter(Boolean);
+      const resposta = document.getElementById("resposta");
       let possiveis = [];
 
       for (let doenca in doencas) {
-        let sintomasNecessarios = doencas[doenca];
-        let contagem = sintomasNecessarios.filter(s => sintomasSelecionados.includes(s)).length;
-        if (contagem >= 2) possiveis.push(doenca);
+        let match = doencas[doenca].filter(s => selecionados.includes(s)).length;
+        if (match >= 2) possiveis.push(doenca);
       }
 
-      if (possiveis.length > 0) {
-        resposta.style.background = "#e6ffe6";
-        resposta.style.color = "#196637";
-        resposta.innerText = "Possíveis doenças: " + possiveis.join(", ") + "\n⚠️ Procure um médico para diagnóstico preciso.";
+      resposta.style.display = "block";
+      if (possiveis.length) {
+        resposta.className = "sucesso";
+        resposta.textContent = "✅ Possíveis doenças: " + possiveis.join(", ") + "\n⚠️ Procure um médico para diagnóstico preciso.";
       } else {
-        resposta.style.background = "#ffe6e6";
-        resposta.style.color = "#b30000";
-        resposta.innerText = "Sintomas não correspondem às doenças cadastradas.";
+        resposta.className = "erro";
+        resposta.textContent = "❌ Nenhuma correspondência encontrada. Tente outros sintomas.";
       }
     }
   </script>
