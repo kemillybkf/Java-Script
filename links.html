@@ -1,146 +1,215 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Especialidades CSB</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background-color: #f9f9f9;
-      color: #333;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Especialidades CSB</title>
+<style>
+/* ---- RESET ---- */
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
 
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background-color:#196637;
-      color: #fff;
-      padding: 15px 40px;
-      text-align: center;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    }
+body {
+  background-color: #f4f6f5;
+  color: #333;
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 
-    header h1 { margin: 0; font-size: 24px; }
-    header p { margin: 5px 0 0; font-size: 14px; }
+/* ---- HEADER ---- */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #196637;
+  color: #fff;
+  padding: 20px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-    header a {
-      position: absolute;
-      left: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      text-decoration: none;
-      background: #14502b;
-      color: #fff;
-      padding: 10px 18px;
-      border-radius: 25px;
-      font-size: 14px;
-      transition: all 0.3s ease;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
-    }
+/* Título */
+header h1 { font-size: 26px; font-weight: 600; }
 
-    header a:hover {
-      background: #0d3a1f;
-      transform: translateY(-2px);
-      box-shadow: 0 5px 12px rgba(0,0,0,0.25);
-    }
+/* PERFIL */
+.perfil-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 8px;
+}
+.perfil-container img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+}
+.perfil-nome { font-weight: 600; color: #fff; }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      padding: 40px;
-      max-width: 1200px;
-      margin: auto;
-    }
+/* Menu dropdown do perfil */
+.perfil-menu {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background: #fff;
+  color: #333;
+  border-radius: 10px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+  width: 220px;
+  display: none;
+  flex-direction: column;
+  padding: 15px;
+  z-index: 2000;
+}
+.perfil-menu p { margin-bottom: 8px; font-weight: 500; font-size: 14px; }
+.perfil-menu button {
+  background: #196637;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+.perfil-menu button:hover { background: #14502b; }
 
-    .box {
-      background-color: #fff;
-      padding: 25px;
-      border-radius: 12px;
-      text-align: center;
-      font-weight: bold;
-      font-size: 16px;
-      cursor: pointer;
-      transition: transform 0.3s ease, background-color 0.3s ease;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
+/* ---- GRID DE ESPECIALIDADES ---- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+  padding: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.box {
+  background-color: #fff;
+  padding: 25px 15px;
+  border-radius: 14px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.box:hover {
+  transform: translateY(-6px);
+  background-color: #e8f5e9;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
 
-    .box:hover {
-      transform: translateY(-5px);
-      background-color: #e8f5e9;
-    }
+/* ---- FORMULÁRIO ---- */
+.form-container {
+  display: none;
+  max-width: 550px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+  padding: 30px 25px;
+}
+.form-container h2 {
+  margin-bottom: 25px;
+  color: #196637;
+  font-size: 22px;
+  text-align: center;
+}
+.form-container label {
+  display: block;
+  margin: 12px 0 6px;
+  font-weight: 600;
+  font-size: 14px;
+}
+.form-container input,
+.form-container select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 14px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.form-container input:focus,
+.form-container select:focus {
+  border-color: #196637;
+  box-shadow: 0 0 6px rgba(25,102,55,0.5);
+  outline: none;
+}
+.form-container button {
+  margin-top: 25px;
+  width: 100%;
+  background: #196637;
+  color: #fff;
+  border: none;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+.form-container button:hover {
+  background: #14502b;
+  transform: scale(1.02);
+}
+.confirmacao {
+  margin-top: 20px;
+  font-weight: 600;
+  color: #196637;
+  background: #e0f7e9;
+  padding: 12px;
+  border-radius: 10px;
+  display: none;
+  text-align: center;
+}
 
-    .form-container {
-      display: none;
-      max-width: 500px;
-      margin: 40px auto;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-      padding: 25px;
-    }
+/* ---- FOOTER ---- */
+footer {
+  background-color: #1b5e20;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  margin-top: auto;
+  font-size: 14px;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.2);
+}
 
-    .form-container h2 { margin-top: 0; color: #196637; }
-
-    .form-container label {
-      display: block;
-      margin: 12px 0 6px;
-      font-weight: bold;
-    }
-
-    .form-container input, 
-    .form-container select {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 14px;
-    }
-
-    .form-container button {
-      margin-top: 20px;
-      background: #196637;
-      color: #fff;
-      border: none;
-      padding: 12px 20px;
-      font-size: 16px;
-      border-radius: 30px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    .form-container button:hover { background: #14502b; }
-
-    .confirmacao {
-      margin-top: 15px;
-      font-weight: bold;
-      color: #196637;
-      background: #e0f7e9;
-      padding: 10px;
-      border-radius: 8px;
-      display: none;
-    }
-
-    footer {
-      background-color: #1b5e20;
-      color: white;
-      text-align: center;
-      padding: 20px;
-      margin-top: auto;
-      font-size: 14px;
-      box-shadow: 0 -2px 8px rgba(0,0,0,0.2);
-    }
-  </style>
+/* ---- RESPONSIVO ---- */
+@media (max-width: 768px) {
+  .grid { padding: 30px 20px; gap: 15px; }
+  .form-container { padding: 25px 20px; }
+}
+@media (max-width: 480px) {
+  header h1 { font-size: 22px; }
+  .box { font-size: 14px; padding: 20px 10px; }
+  .form-container h2 { font-size: 20px; }
+}
+</style>
 </head>
 <body>
 
 <header>
   <h1>Especialidades CSB</h1>
-  <p>Clique em uma área e agende sua consulta!</p>
-  <a href="perfil.html"> Perfil</a>
+  <div class="perfil-container" id="perfil-container">
+    <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Perfil">
+    <span class="perfil-nome" id="user-name"></span>
+    <div class="perfil-menu" id="perfil-menu">
+      <p id="perfil-info-nome"></p>
+      <p id="perfil-info-email"></p>
+      <p id="perfil-info-telefone"></p>
+      <a href="iniciocsb.html">Sair</a>
+    </div>
+  </div>
 </header>
 
 <section class="grid">
@@ -166,12 +235,11 @@
   <div class="box" onclick="abrirFormulario('Alergologia')">🌿 Alergologia</div>
 </section>
 
-
 <div class="form-container" id="form-agendamento">
   <h2 id="form-title"></h2>
   <form id="formulario" onsubmit="agendar(event)">
     <label for="nome">Nome:</label>
-    <input type="text" id="nome" required>
+    <input type="text" id="nome" readonly>
 
     <label for="email">E-mail:</label>
     <input type="email" id="email" required>
@@ -195,7 +263,7 @@
     <label for="hora">Hora:</label>
     <input type="time" id="hora" required>
 
-    <button type="submit">Agendar Consulta</button>
+        <button type="submit">Agendar Consulta</button>
   </form>
   <div class="confirmacao" id="confirmacao">✅ Consulta agendada com sucesso!</div>
 </div>
@@ -205,6 +273,7 @@
 </footer>
 
 <script>
+  // Dados de médicos
   const medicos = {
     "Clínica Geral": ["Dr. Felipe Andrade","Dra. Helena Duarte","Dr. Mateus Ribeiro","Dra. Laura Torres"],
     "Cardiologia": ["Dr. João Silva","Dra. Maria Oliveira","Dr. Pedro Martins","Dra. Bianca Costa"],
@@ -228,13 +297,34 @@
     "Alergologia": ["Dr. André Nascimento","Dra. Bruna Lopes","Dr. Felipe Moura"]
   };
 
+  // Recuperar usuário logado
+  let usuario = JSON.parse(localStorage.getItem("usuario")) || { nome: "Visitante", email:"", telefone:"" };
+  document.getElementById("user-name").innerText = usuario.nome;
 
+  // Exibir perfil ao clicar
+  const perfilContainer = document.getElementById("perfil-container");
+  const perfilMenu = document.getElementById("perfil-menu");
+  perfilContainer.addEventListener("click", () => {
+    perfilMenu.style.display = perfilMenu.style.display === "flex" ? "none" : "flex";
+    document.getElementById("perfil-info-nome").innerText = "Nome: " + usuario.nome;
+    document.getElementById("perfil-info-email").innerText = "E-mail: " + usuario.email;
+    document.getElementById("perfil-info-telefone").innerText = "Telefone: " + usuario.telefone;
+  });
+
+  // Logout
+  document.getElementById("logout-btn").addEventListener("click", () => {
+    localStorage.removeItem("usuario");
+    window.location.href = "index.html"; // página de login/início
+  });
+
+  // Abrir formulário
   function abrirFormulario(especialidade) {
     const form = document.getElementById("form-agendamento");
     document.getElementById("form-title").innerText = "Agendamento - " + especialidade;
     form.style.display = "block";
     document.getElementById("confirmacao").style.display = "none";
 
+    // Preencher médicos
     const select = document.getElementById("medico");
     select.innerHTML = "";
     medicos[especialidade].forEach(m => {
@@ -244,39 +334,19 @@
       select.appendChild(option);
     });
 
-    // 👉 Evento para rolar a tela quando escolher um médico
-    select.addEventListener("change", () => {
-      document.getElementById("local").scrollIntoView({ behavior: "smooth" });
-    });
+    // Preencher nome do usuário logado
+    document.getElementById("nome").value = usuario.nome;
   }
 
+  // Agendar consulta
   function agendar(event) {
     event.preventDefault();
-
-    // pegar dados do formulário
-    const consulta = {
-      nome: document.getElementById("nome").value,
-      email: document.getElementById("email").value,
-      telefone: document.getElementById("telefone").value,
-      especialidade: document.getElementById("form-title").innerText.replace("Agendamento - ",""),
-      medico: document.getElementById("medico").value,
-      local: document.getElementById("local").value,
-      data: document.getElementById("data").value,
-      hora: document.getElementById("hora").value
-    };
-
-    // salvar no localStorage
-    let consultas = JSON.parse(localStorage.getItem("consultas")) || [];
-    consultas.push(consulta);
-    localStorage.setItem("consultas", JSON.stringify(consultas));
-
-    // mensagem de confirmação
     document.getElementById("confirmacao").style.display = "block";
-
-    // limpar formulário
     document.getElementById("formulario").reset();
+    document.getElementById("nome").value = usuario.nome; // manter nome preenchido
   }
 </script>
 
 </body>
 </html>
+
